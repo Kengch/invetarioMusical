@@ -138,7 +138,7 @@ public class frm_agregarInstrumento extends javax.swing.JFrame {
                 }else{
                     JOptionPane.showMessageDialog(null, "No se pudo crear instrumento");
                 }
-                conn.close();
+                
             }
             catch (SQLException e){
                 e.printStackTrace();

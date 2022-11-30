@@ -5,6 +5,8 @@
 package formularios;
 
 import baseDatos.baseDatos;
+import formulariosInventarios.frm_agregarInventario;
+import formulariosInventarios.frm_listaInvetario;
 import java.sql.Connection;
 
 /**
@@ -19,6 +21,7 @@ public class Frm_Menu extends javax.swing.JFrame {
      */
     public Frm_Menu() {
         initComponents();
+        conn = bd.abrirBD();        
     }
 
     /**
@@ -242,10 +245,14 @@ public class Frm_Menu extends javax.swing.JFrame {
 
     private void btn_agregarInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregarInventarioActionPerformed
         // TODO add your handling code here:
+        frm_agregarInventario agregarInventario = new frm_agregarInventario();
+        agregarInventario.setVisible(true);
     }//GEN-LAST:event_btn_agregarInventarioActionPerformed
 
     private void btn__listaInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn__listaInventarioActionPerformed
         // TODO add your handling code here:
+        frm_listaInvetario listaInventario = new frm_listaInvetario();
+        listaInventario.setVisible(true);
     }//GEN-LAST:event_btn__listaInventarioActionPerformed
 
     /**
