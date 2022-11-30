@@ -3,25 +3,31 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package formularios;
+
 import baseDatos.baseDatos;
-import java.sql.Statement;
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
-import java.util.regex.*;  
+
 /**
  *
  * @author Keng
  */
-public class frm_agregarInstrumento extends javax.swing.JFrame {
+public class frm_editarInstrumento extends javax.swing.JFrame {
+     
+    private String id;
     private baseDatos bd;
     private Connection conn = null;
-   
-    public frm_agregarInstrumento( ) {
+    /**
+     * Creates new form frm_editarInstrumento
+     */
+    public frm_editarInstrumento(String id, String nombre, String valor) {
         initComponents();
-        cb_tipoInstrumento.addItem("Frotacion");
-        cb_tipoInstrumento.addItem("Punteado");
-        cb_tipoInstrumento.addItem("Percusion");
+        txt_nombre.setText(nombre);
+        txt_valor.setText(valor);
+        this.id = id;
+        conn = bd.abrirBD();
+
     }
 
     /**
@@ -35,8 +41,6 @@ public class frm_agregarInstrumento extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        cb_tipoInstrumento = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
         txt_nombre = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txt_valor = new javax.swing.JTextField();
@@ -46,13 +50,10 @@ public class frm_agregarInstrumento extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel1.setText("Agregar Nuevo Instrumento");
+        jLabel1.setText("Editar Instrumento");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setText("Nombre del Instrumento");
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel3.setText("Tipo de Instrumento");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setText("Valor");
@@ -76,72 +77,74 @@ public class frm_agregarInstrumento extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txt_valor)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2)
-                    .addComponent(cb_tipoInstrumento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txt_nombre)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btn_atras, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_atras, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                        .addComponent(btn_guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_nombre)
+                    .addComponent(txt_valor))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cb_tipoInstrumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txt_valor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_atras, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_atrasActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btn_atrasActionPerformed
+
     private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
         String nombre = txt_nombre.getText();
-        String tipo = cb_tipoInstrumento.getSelectedItem().toString();
-        int valor = 0;
+        String valor = "";
         
         if(Pattern.matches("^[0-9]*$", txt_valor.getText())){
-            valor = Integer.parseInt(txt_valor.getText());
-            
+            valor = txt_valor.getText();
+            //String query = "UPDATE instrumentos set nombre = '" + nombre + "', valor = " + valor + " where id = " + id;
+            String query = "UPDATE instrumentos SET nombre = ?, valor = ? WHERE id = ?";
             try{
-                conn = bd.abrirBD();
-                Statement stmt = conn.createStatement();
-                String query = "insert into instrumentos(nombre, tipo, valor) values('" + nombre + "', '" + tipo +"', " + valor +")";
-
-                if(stmt.executeUpdate(query) == 1){
-                    JOptionPane.showMessageDialog(null, "Se ha creado instrumento");
+                PreparedStatement pstmt = conn.prepareStatement(query);
+                pstmt.setString(1, nombre);
+                pstmt.setString(2, valor);
+                pstmt.setString(3, id);
+                int row = pstmt.executeUpdate();
+                
+                if(row == 1){
+                    JOptionPane.showMessageDialog(null, "Se ha actualizado instrumento");
+                     JOptionPane.showMessageDialog(null, "Por favor refresque la lista");
                     this.dispose();
                 }else{
-                    JOptionPane.showMessageDialog(null, "No se pudo crear instrumento");
+                    JOptionPane.showMessageDialog(null, "No se pudo actualizar instrumento");
                 }
-                conn.close();
             }
             catch (SQLException e){
                 e.printStackTrace();
+                System.err.println(e.getMessage());
             }
         }
         else{
@@ -149,10 +152,6 @@ public class frm_agregarInstrumento extends javax.swing.JFrame {
             txt_valor.setText("");
         }
     }//GEN-LAST:event_btn_guardarActionPerformed
-
-    private void btn_atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_atrasActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_btn_atrasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -171,20 +170,20 @@ public class frm_agregarInstrumento extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frm_agregarInstrumento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frm_editarInstrumento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frm_agregarInstrumento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frm_editarInstrumento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frm_agregarInstrumento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frm_editarInstrumento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frm_agregarInstrumento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frm_editarInstrumento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frm_agregarInstrumento().setVisible(true);
+                //new frm_editarInstrumento().setVisible(true);
             }
         });
     }
@@ -192,10 +191,8 @@ public class frm_agregarInstrumento extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_atras;
     private javax.swing.JButton btn_guardar;
-    private javax.swing.JComboBox<String> cb_tipoInstrumento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField txt_nombre;
     private javax.swing.JTextField txt_valor;
