@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Keng
+ * @author Keng, Tannya granados
  */
 public class frm_editarInstrumento extends javax.swing.JFrame {
      
