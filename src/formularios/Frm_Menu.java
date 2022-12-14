@@ -11,7 +11,7 @@ import java.sql.Connection;
 
 /**
  *
- * @author Keng
+ * @authors Keng, Tannya Granados
  */
 public class Frm_Menu extends javax.swing.JFrame {
     private baseDatos bd;
@@ -125,6 +125,11 @@ public class Frm_Menu extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Facturacion"));
 
         btn_CrearFactura.setText("Crear Factura");
+        btn_CrearFactura.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_CrearFacturaMousePressed(evt);
+            }
+        });
 
         btn__listaFacturas.setText("Lista de Facturas");
 
@@ -254,6 +259,12 @@ public class Frm_Menu extends javax.swing.JFrame {
         frm_listaInvetario listaInventario = new frm_listaInvetario();
         listaInventario.setVisible(true);
     }//GEN-LAST:event_btn__listaInventarioActionPerformed
+
+    private void btn_CrearFacturaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_CrearFacturaMousePressed
+        // TODO add your handling code here:
+        frm_CrearFactura factura = new frm_CrearFactura();
+        factura.setVisible(true);
+    }//GEN-LAST:event_btn_CrearFacturaMousePressed
 
     /**
      * @param args the command line arguments

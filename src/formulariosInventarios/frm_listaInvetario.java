@@ -6,67 +6,74 @@ package formulariosInventarios;
 
 import baseDatos.baseDatos;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Keng
+ * @author Keng, Tannya Granados
  */
 public class frm_listaInvetario extends javax.swing.JFrame {
+
     private baseDatos bd;
     private Connection conn = null;
     private ButtonGroup checkBoxGroup;
     private DefaultTableModel tblModel;
+
     /**
      * Creates new form frm_listaInvetario
      */
     public frm_listaInvetario() {
         initComponents();
-        
+
         //checkbox
         checkBoxGroup = new ButtonGroup();
         checkBoxGroup.add(cb_si);
         checkBoxGroup.add(cb_no);
-        
+
         //desactivar botones
         btn_editar.setEnabled(false);
         btn_eliminar.setEnabled(false);
-        
+
         //obtener datos desde la bd
         try {
             conn = bd.abrirBD();
             Statement stmt = conn.createStatement();
-            String query = "SELECT inv.id as id, ins.nombre as instrumento, ins.valor as valor, inv.cantidad_disponible as cantidad_disponible, inv.disponible as disponible"
+            String query = "SELECT inv.id as id, "
+                    + "ins.nombre as instrumento, "
+                    + "ins.valor as valor, "
+                    + "inv.cantidad_disponible as cantidad_disponible, "
+                    + "inv.disponible as disponible"
                     + " FROM inventarios inv inner join instrumentos ins on ins.id = inv.id_instrumento "
                     + " where ins.disponible = '0' "
                     + " and inv.eliminado = '0'";
             ResultSet rs = stmt.executeQuery(query);
-            
-            while(rs.next()){
-              String id = rs.getString("id");
-              String instrumento = rs.getString("instrumento");
-              String valor = rs.getString("valor");
-              String cantidad = rs.getString("cantidad_disponible");
-              String disponible = rs.getString("disponible");
-              
-              if(disponible.equals("0")){
-                  disponible = "Si";
-              }else{
-                  disponible = "No";
-              }
-              
-              String tbData [] = {id, instrumento, valor, cantidad, disponible};
-              tblModel = (DefaultTableModel)table_listaInventario.getModel();
-              
-              tblModel.addRow(tbData);
+
+            while (rs.next()) {
+                String id = rs.getString("id");
+                String instrumento = rs.getString("instrumento");
+                String valor = rs.getString("valor");
+                String cantidad = rs.getString("cantidad_disponible");
+                String disponible = rs.getString("disponible");
+
+                if (disponible.equals("0")) {
+                    disponible = "Si"; 
+                } else {
+                    disponible = "No";
+                }
+
+                String tbData[] = {id, instrumento, valor, cantidad, disponible};
+                tblModel = (DefaultTableModel) table_listaInventario.getModel();
+
+                tblModel.addRow(tbData);
             }
-            
-        }
-        catch(SQLException e){
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -97,7 +104,7 @@ public class frm_listaInvetario extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel1.setText("Lista de Inventarios");
+        jLabel1.setText("Inventario de instrumentos");
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Disponibilidad"));
 
@@ -187,30 +194,31 @@ public class frm_listaInvetario extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btn_atras, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_cargarLista, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(21, 21, 21)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btn_atras, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btn_cargarLista, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btn_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 869, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 869, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(294, 294, 294)
+                        .addComponent(jLabel1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(328, 328, 328))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -246,23 +254,90 @@ public class frm_listaInvetario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cb_siActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_siActionPerformed
-       
+
     }//GEN-LAST:event_cb_siActionPerformed
 
     private void cb_noActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_noActionPerformed
-      
+
     }//GEN-LAST:event_cb_noActionPerformed
 
     private void btn_atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_atrasActionPerformed
-        
+        this.dispose();
     }//GEN-LAST:event_btn_atrasActionPerformed
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
         // TODO add your handling code here:
+              if(txt_buscar.getText().equals("") == false){
+            //limpiar tabla
+            tblModel = (DefaultTableModel)table_listaInventario.getModel();
+            tblModel.setRowCount(0);
+        
+            String buscar = txt_buscar.getText();
+            //obtener datos desde la bd
+            try {
+                conn = bd.abrirBD();
+                Statement stmt = conn.createStatement();
+                String query = "SELECT *"
+                        + "FROM inventarios inv inner join instrumentos ins on ins.id = inv.id_instrumento  "
+                        + "WHERE disponible = '0' "
+                        + "AND instrumento like '%" + buscar +"%' "
+                        + "OR valor like '%" + buscar + "%' "
+                        ;
+                ResultSet rs = stmt.executeQuery(query);
+
+                while(rs.next()){
+                  String id = rs.getString("id");
+                  String instrumento = rs.getString("instrumento");
+                  String valor = rs.getString("valor");
+                  String cantidad_Disponible = Integer.toString(rs.getInt("cantidad_disponible"));
+                  //String disponible = rs.getInt(can)
+
+                  String tbData [] = {id, instrumento, valor, cantidad_Disponible};
+                  tblModel = (DefaultTableModel)table_listaInventario.getModel();
+
+                  tblModel.addRow(tbData);
+                }
+
+            }
+            catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
     }//GEN-LAST:event_btn_buscarActionPerformed
 
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
         // TODO add your handling code here:
+
+        //limpiar search
+        txt_buscar.setText("");
+
+        //limpiar radio buttons
+        checkBoxGroup.clearSelection();
+
+        tblModel = (DefaultTableModel) table_listaInventario.getModel();
+        int selectedRowIndex = table_listaInventario.getSelectedRow();
+
+        String id = tblModel.getValueAt(selectedRowIndex, 0).toString();
+
+        String query = "UPDATE instrumentos SET disponible = '1' WHERE id = ?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, id);
+            int row = pstmt.executeUpdate();
+
+            if (row == 1) {
+                JOptionPane.showMessageDialog(null, "Se ha eliminado instrumento");
+                JOptionPane.showMessageDialog(null, "Por favor refresque la lista");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo eliminar instrumento");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getMessage());
+        }
+
+        btn_editar.setEnabled(false);
+        btn_eliminar.setEnabled(false);
     }//GEN-LAST:event_btn_eliminarActionPerformed
 
     private void btn_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editarActionPerformed
