@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 import java.util.regex.*;  
 /**
  *
- * @author Keng
+ * @author Keng, Tannya Granados
  */
 public class frm_agregarInstrumento extends javax.swing.JFrame {
     private baseDatos bd;

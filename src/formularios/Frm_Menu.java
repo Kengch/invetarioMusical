@@ -11,7 +11,7 @@ import java.sql.Connection;
 
 /**
  *
- * @author Keng
+ * @authors Keng, Tannya Granados
  */
 public class Frm_Menu extends javax.swing.JFrame {
     private baseDatos bd;

@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Keng
+ * @author Keng, Tannya Granados
  */
 public class frm_listaInstrumentos extends javax.swing.JFrame {
     private baseDatos bd;

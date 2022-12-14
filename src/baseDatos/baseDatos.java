@@ -6,16 +6,16 @@ package baseDatos;
 import java.sql.*;
 /**
  *
- * @author Keng
+ * @authors Keng, Tannya Granados
  */
 public class baseDatos {
     private static Connection conn = null;
     
     private baseDatos(){
-        String url = "jdbc:mysql://localhost:3306/instrumentos";
+        String url = "jdbc:mysql://localhost:3306/instrumentos_bd?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
         String driver = "com.mysql.cj.jdbc.Driver";
         String usuario = "root";
-        String password = "password";
+        String password = "04731597";
         
         try{
             Class.forName(driver);

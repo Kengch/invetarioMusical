@@ -6,7 +6,7 @@ package model;
 
 /**
  *
- * @author Keng
+ * @author Keng, Tannya Granados
  */
 public class instrumentos {
 
